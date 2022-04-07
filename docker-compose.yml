@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  webenterprisequangdung:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "TestP@ssw0rd"
+      MSSQL_PID: "Express"
+    ports:
+    - "1433:1433"
+  webenterpriseapi:
+    build: .
+    depends_on:
+      - webenterprisequangdung
+    environment:
+      ServerName: "webenterprisequangdung"
+      Database: "webenterprise1640"
+      UserName: "SA"
+      Password: "TestP@ssw0rd"
+    ports:
+      - "1337:8080"
